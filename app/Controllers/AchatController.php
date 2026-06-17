@@ -14,8 +14,12 @@ class AchatController extends BaseController
     {
         $caisse_id = session()->get('id_caisse');
 
+        if (! session()->get('username')) {
+            return redirect()->to('/')->with('error', 'Veuillez vous connecter avant de faire un achat.');
+        }
+
         if (empty($caisse_id)) {
-            return redirect()->to('/');
+            return redirect()->to('/caisse')->with('error', 'Veuillez choisir une caisse.');
         }
 
         $model_achat = new Achat();
@@ -27,6 +31,7 @@ class AchatController extends BaseController
             'achats'    => $model_achat->where('id_caisse', $caisse_id)->findAll(),
             'produits'  => $model_produit->where('quantite_stock >', 0)->findAll(),
             'caisse'    => $model_caisse->find($caisse_id),
+            'nom_acheteur' => session()->get('username'),
         ];
 
         return view('achats', $data);
@@ -36,11 +41,21 @@ class AchatController extends BaseController
     {
         $caisse_id = session()->get('id_caisse');
 
-        if (empty($caisse_id)) {
-            return redirect()->to('/')->with('error', 'Veuillez choisir une caisse avant de faire un achat.');
+        if (! session()->get('username')) {
+            return redirect()->to('/')->with('error', 'Veuillez vous connecter avant de clôturer un achat.');
         }
 
+        if (empty($caisse_id)) {
+            return redirect()->to('/caisse')->with('error', 'Veuillez choisir une caisse avant de faire un achat.');
+        }
+
+        // Le nom de l’acheteur vient du login. On ne le saisit plus dans la page achat.
+        $nomAcheteur = trim((string) session()->get('username'));
         $produitsPostes = $this->request->getPost('produits');
+
+        if ($nomAcheteur === '') {
+            return redirect()->to('/')->with('error', 'Veuillez vous connecter avant de clôturer un achat.');
+        }
 
         if (empty($produitsPostes) || !is_array($produitsPostes)) {
             return redirect()->to('/achats')->with('error', 'Aucun produit dans l’achat en cours.');
@@ -93,6 +108,7 @@ class AchatController extends BaseController
 
             $lignesAInserer[] = [
                 'numero_ticket' => $numeroTicket,
+                'nom_acheteur'  => $nomAcheteur,
                 'id_caisse'     => $caisse_id,
                 'id_produit'    => $idProduit,
                 'quantite'      => $quantite,
@@ -120,7 +136,7 @@ class AchatController extends BaseController
         // Le panier était côté navigateur : après redirection, la liste redevient vide automatiquement.
         return redirect()->to('/achats')->with(
             'success',
-            'Achat clôturé avec succès. Ticket : ' . $numeroTicket . '. Nouvelle liste prête pour le prochain client.'
+            'Achat clôturé avec succès pour ' . $nomAcheteur . '. Ticket : ' . $numeroTicket . '. Nouvelle liste prête pour le prochain client.'
         );
     }
 }

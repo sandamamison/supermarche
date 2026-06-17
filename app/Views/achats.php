@@ -3,171 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saisie d'achat - Caisse <?= esc($caisse['numero_caisse']) ?></title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            margin: 0;
-            padding: 20px;
-            color: #334155;
-        }
-        .header-bar {
-            background: #ffffff;
-            padding: 20px 30px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .caisse-info h2 {
-            margin: 0;
-            color: #0f172a;
-            font-size: 24px;
-        }
-        .caisse-info p {
-            margin: 5px 0 0 0;
-            color: #64748b;
-            font-size: 14px;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 30px;
-        }
-        .card {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-        }
-        .card-title {
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 18px;
-            font-weight: 600;
-            color: #0f172a;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 15px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #475569;
-            font-size: 14px;
-        }
-        select, input[type="number"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            font-size: 15px;
-            font-family: inherit;
-            color: #1e293b;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            box-sizing: border-box;
-        }
-        select:focus, input[type="number"]:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-        .btn {
-            background: #3b82f6;
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: background 0.2s;
-        }
-        .btn:hover {
-            background: #2563eb;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #f1f5f9;
-        }
-        th {
-            font-weight: 600;
-            color: #64748b;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        td {
-            font-size: 15px;
-            color: #334155;
-        }
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #94a3b8;
-            font-size: 15px;
-        }
-        .alert {
-            max-width: 1000px;
-            margin: 0 auto 20px auto;
-            padding: 14px 18px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-        .alert-success {
-            background: #ecfdf5;
-            color: #047857;
-            border: 1px solid #a7f3d0;
-        }
-        .alert-error {
-            background: #fef2f2;
-            color: #b91c1c;
-            border: 1px solid #fecaca;
-        }
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <title>Saisie d’achat - Caisse <?= esc($caisse['numero_caisse'] ?? '--') ?></title>
+    <link rel="stylesheet" href="<?= base_url('assets/css/supermarche.css') ?>">
 </head>
 <body>
 
-    <div class="header-bar">
-        <div class="caisse-info">
-            <h2>Caisse N° <?= esc($caisse['numero_caisse'] ?? '--') ?></h2>
-            <p><?= esc($caisse['libelle'] ?? '') ?></p>
+<div class="app-shell">
+    <header class="topbar">
+        <div class="brand">
+            <div class="brand-icon">🛒</div>
+            <div>
+                <h1 class="brand-title">Caisse Supermarché</h1>
+                <p class="brand-subtitle">Saisie des achats</p>
+            </div>
         </div>
-        <div>
-            <!-- Bouton pour quitter la caisse -->
-            <a href="<?= base_url('/') ?>" style="color: #ef4444; text-decoration: none; font-weight: 600; font-size: 14px; padding: 8px 16px; border-radius: 6px; background: #fef2f2; transition: background 0.2s;">
-                Fermer & Quitter
-            </a>
+
+        <div class="topbar-actions">
+            <span class="caisse-badge">
+                Caisse N° <?= esc($caisse['numero_caisse'] ?? '--') ?>
+            </span>
+            <span class="user-badge">
+                Acheteur : <?= esc($nom_acheteur ?? session()->get('username') ?? '') ?>
+            </span>
+            <a href="<?= base_url('caisse') ?>" class="btn btn-light btn-small">Changer caisse</a>
+            <a href="<?= base_url('logout') ?>" class="btn btn-danger-light btn-small">Fermer & Quitter</a>
         </div>
-    </div>
+    </header>
 
     <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success">
@@ -181,22 +42,34 @@
         </div>
     <?php endif; ?>
 
-    <div class="container">
-        <!-- Colonne Gauche : Formulaire d'ajout -->
-        <div class="card">
+    <section class="page-header">
+        <h2 class="page-title">Nouvel achat client</h2>
+        <p class="page-subtitle">
+            <?= esc($caisse['libelle'] ?? 'Caisse sélectionnée') ?> — ajoutez les produits au panier puis clôturez l’achat.
+        </p>
+    </section>
+
+    <div class="grid-two">
+        <section class="card">
             <h3 class="card-title">Ajouter un produit</h3>
+
             <form id="form-ajout">
                 <div class="form-group">
-                    <label for="id_produit">Sélectionner un produit</label>
+                    <label for="id_produit">Produit</label>
                     <select name="id_produit" id="id_produit" required>
-                        <option value="" data-prix="0" data-nom="">-- Choisissez un produit --</option>
+                        <option value="" data-prix="0" data-nom="" data-stock="0">-- Choisissez un produit --</option>
                         <?php if (!empty($produits) && is_array($produits)): ?>
                             <?php foreach ($produits as $produit): ?>
-                                <option value="<?= esc($produit['id_produit']) ?>" 
-                                        data-prix="<?= esc($produit['prix']) ?>"
-                                        data-nom="<?= esc($produit['designation']) ?>">
-                                    <?= esc($produit['designation']) ?> 
-                                    (<?= number_format($produit['prix'], 2, ',', ' ') ?> Ar)
+                                <option
+                                    value="<?= esc($produit['id_produit']) ?>"
+                                    data-prix="<?= esc($produit['prix']) ?>"
+                                    data-nom="<?= esc($produit['designation']) ?>"
+                                    data-stock="<?= esc($produit['quantite_stock'] ?? 0) ?>"
+                                >
+                                    <?= esc($produit['designation']) ?> — <?= number_format((float) $produit['prix'], 2, ',', ' ') ?> Ar
+                                    <?php if (isset($produit['quantite_stock'])): ?>
+                                        | Stock : <?= esc($produit['quantite_stock']) ?>
+                                    <?php endif; ?>
                                 </option>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -206,133 +79,220 @@
                 <div class="form-group">
                     <label for="quantite">Quantité</label>
                     <input type="number" name="quantite" id="quantite" min="1" value="1" required>
+                    <small class="small-note" id="stock-info">Sélectionnez un produit pour voir le stock.</small>
                 </div>
 
-                <button type="button" id="btn-ajouter" class="btn">Ajouter au panier</button>
+                <button type="button" id="btn-ajouter" class="btn btn-full">Ajouter au panier</button>
             </form>
-        </div>
+        </section>
 
-        <!-- Colonne Droite : Récapitulatif du panier en cours -->
-        <div class="card">
-            <h3 class="card-title">Panier de la caisse</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Produit</th>
-                        <th>Qté</th>
-                        <th>Prix U.</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody id="table-panier">
-                    <!-- Les produits s'ajouteront ici via JavaScript -->
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3" style="text-align: right; font-weight: 600; font-size: 16px; padding-top: 20px;">Total Général :</td>
-                        <td style="font-weight: 700; font-size: 18px; color: #3b82f6; padding-top: 20px;" id="total-general">
-                            0,00 Ar
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-            
-            <div style="margin-top: 20px; text-align: right;">
-                <form action="<?= base_url('achats/cloturer') ?>" method="POST" id="form-cloture">
-                    <!-- Les inputs cachés du panier s'ajouteront ici -->
-                    <button type="submit" class="btn" style="background: #10b981; width: auto;" id="btn-cloturer" disabled>Clôturer l'achat</button>
-                </form>
+        <section class="card">
+            <h3 class="card-title">Panier en cours</h3>
+
+            <div class="form-group">
+                <label>Nom de l’acheteur</label>
+                <div class="buyer-box">
+                    <?= esc($nom_acheteur ?? session()->get('username') ?? '') ?>
+                </div>
+                <small class="small-note">Ce nom vient directement du login.</small>
             </div>
-        </div>
+
+            <form action="<?= base_url('achats/cloturer') ?>" method="post" id="form-cloture">
+                <?= csrf_field() ?>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produit</th>
+                                <th>Qté</th>
+                                <th>Prix U.</th>
+                                <th>Total</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-panier">
+                            <tr id="ligne-vide">
+                                <td colspan="5">
+                                    <div class="empty-state">Aucun produit ajouté pour le moment.</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3" style="text-align: right;">Total général :</td>
+                                <td class="total-text" id="total-general">0,00 Ar</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div id="hidden-panier"></div>
+
+                <div class="cart-actions">
+                    <button type="button" class="btn btn-light" id="btn-vider" disabled>Vider le panier</button>
+                    <button type="submit" class="btn btn-success" id="btn-cloturer" disabled>Clôturer l’achat</button>
+                </div>
+            </form>
+        </section>
     </div>
+</div>
 
-    <script>
-        let panier = [];
-        let totalPanier = 0;
+<script>
+    let panier = [];
 
-        document.getElementById('btn-ajouter').addEventListener('click', function() {
-            const selectProduit = document.getElementById('id_produit');
-            const inputQuantite = document.getElementById('quantite');
+    const selectProduit = document.getElementById('id_produit');
+    const inputQuantite = document.getElementById('quantite');
+    const stockInfo = document.getElementById('stock-info');
+    const btnAjouter = document.getElementById('btn-ajouter');
+    const btnVider = document.getElementById('btn-vider');
+    const btnCloturer = document.getElementById('btn-cloturer');
+    const tbody = document.getElementById('table-panier');
+    const hiddenPanier = document.getElementById('hidden-panier');
+    const totalGeneral = document.getElementById('total-general');
+    const nomAcheteur = <?= json_encode($nom_acheteur ?? session()->get('username') ?? '') ?>;
 
-            const id_produit = selectProduit.value;
-            const quantite = parseInt(inputQuantite.value);
-            
-            if (!id_produit || quantite < 1) {
-                alert('Veuillez sélectionner un produit et une quantité valide.');
-                return;
-            }
+    selectProduit.addEventListener('change', function () {
+        const option = selectProduit.options[selectProduit.selectedIndex];
+        const stock = parseInt(option.getAttribute('data-stock') || '0');
 
-            const optionSelectionnee = selectProduit.options[selectProduit.selectedIndex];
-            const nom = optionSelectionnee.getAttribute('data-nom');
-            const prix = parseFloat(optionSelectionnee.getAttribute('data-prix'));
-            const totalLigne = prix * quantite;
+        if (!selectProduit.value) {
+            stockInfo.textContent = 'Sélectionnez un produit pour voir le stock.';
+            return;
+        }
 
-            // Ajouter au tableau JS
+        stockInfo.textContent = 'Stock disponible : ' + stock;
+    });
+
+    btnAjouter.addEventListener('click', function () {
+        const idProduit = selectProduit.value;
+        const quantite = parseInt(inputQuantite.value);
+        const option = selectProduit.options[selectProduit.selectedIndex];
+
+        if (!idProduit || quantite < 1) {
+            alert('Veuillez sélectionner un produit et une quantité valide.');
+            return;
+        }
+
+        const stock = parseInt(option.getAttribute('data-stock') || '0');
+        const quantiteDejaDansPanier = panier
+            .filter(item => item.id_produit === idProduit)
+            .reduce((total, item) => total + item.quantite, 0);
+
+        if ((quantiteDejaDansPanier + quantite) > stock) {
+            alert('Stock insuffisant pour ce produit.');
+            return;
+        }
+
+        const nom = option.getAttribute('data-nom');
+        const prix = parseFloat(option.getAttribute('data-prix'));
+
+        const itemExistant = panier.find(item => item.id_produit === idProduit);
+
+        if (itemExistant) {
+            itemExistant.quantite += quantite;
+            itemExistant.total = itemExistant.quantite * itemExistant.prix;
+        } else {
             panier.push({
-                id_produit: id_produit,
+                id_produit: idProduit,
                 nom: nom,
                 quantite: quantite,
                 prix: prix,
-                total: totalLigne
+                total: prix * quantite
             });
-
-            totalPanier += totalLigne;
-
-            mettreAJourAffichage();
-
-            // Remettre la quantité à 1 et le select à 0
-            selectProduit.value = '';
-            inputQuantite.value = 1;
-        });
-
-        function mettreAJourAffichage() {
-            const tbody = document.getElementById('table-panier');
-            const formCloture = document.getElementById('form-cloture');
-            tbody.innerHTML = '';
-            
-            // Nettoyer les anciens inputs cachés (garder juste le bouton)
-            const inputsCaches = formCloture.querySelectorAll('input.produit-input');
-            inputsCaches.forEach(input => input.remove());
-
-            panier.forEach((item, index) => {
-                // Ajouter la ligne au tableau visuel
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.nom}</td>
-                    <td>${item.quantite}</td>
-                    <td>${item.prix.toLocaleString('fr-FR', {minimumFractionDigits: 2})} Ar</td>
-                    <td><strong>${item.total.toLocaleString('fr-FR', {minimumFractionDigits: 2})} Ar</strong></td>
-                `;
-                tbody.appendChild(tr);
-
-                // Ajouter les inputs cachés pour l'envoi au backend
-                formCloture.insertAdjacentHTML('beforeend', `
-                    <input class="produit-input" type="hidden" name="produits[${index}][id_produit]" value="${item.id_produit}">
-                    <input class="produit-input" type="hidden" name="produits[${index}][quantite]" value="${item.quantite}">
-                    <input class="produit-input" type="hidden" name="produits[${index}][prix_unitaire]" value="${item.prix}">
-                `);
-            });
-
-            // Mettre à jour le total général
-            document.getElementById('total-general').innerText = totalPanier.toLocaleString('fr-FR', {minimumFractionDigits: 2}) + ' Ar';
-
-            // Activer ou désactiver le bouton clôturer
-            document.getElementById('btn-cloturer').disabled = (panier.length === 0);
         }
 
+        selectProduit.value = '';
+        inputQuantite.value = 1;
+        stockInfo.textContent = 'Sélectionnez un produit pour voir le stock.';
+        mettreAJourAffichage();
+    });
 
-        document.getElementById('form-cloture').addEventListener('submit', function(event) {
-            if (panier.length === 0) {
-                event.preventDefault();
-                alert('Aucun produit à clôturer.');
-                return;
-            }
+    btnVider.addEventListener('click', function () {
+        if (panier.length === 0) {
+            return;
+        }
 
-            if (!confirm('Clôturer cet achat et enregistrer le ticket ?')) {
-                event.preventDefault();
-            }
+        if (confirm('Vider le panier en cours ?')) {
+            panier = [];
+            mettreAJourAffichage();
+        }
+    });
+
+    function supprimerLigne(index) {
+        panier.splice(index, 1);
+        mettreAJourAffichage();
+    }
+
+    function mettreAJourAffichage() {
+        tbody.innerHTML = '';
+        hiddenPanier.innerHTML = '';
+
+        if (panier.length === 0) {
+            tbody.innerHTML = `
+                <tr id="ligne-vide">
+                    <td colspan="5">
+                        <div class="empty-state">Aucun produit ajouté pour le moment.</div>
+                    </td>
+                </tr>
+            `;
+        }
+
+        panier.forEach((item, index) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${escapeHtml(item.nom)}</td>
+                <td>${item.quantite}</td>
+                <td>${formatMontant(item.prix)} Ar</td>
+                <td><strong>${formatMontant(item.total)} Ar</strong></td>
+                <td>
+                    <button type="button" class="btn btn-danger-light btn-small" onclick="supprimerLigne(${index})">Supprimer</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+
+            hiddenPanier.insertAdjacentHTML('beforeend', `
+                <input class="produit-input" type="hidden" name="produits[${index}][id_produit]" value="${item.id_produit}">
+                <input class="produit-input" type="hidden" name="produits[${index}][quantite]" value="${item.quantite}">
+                <input class="produit-input" type="hidden" name="produits[${index}][prix_unitaire]" value="${item.prix}">
+            `);
         });
-    </script>
+
+        const total = panier.reduce((somme, item) => somme + item.total, 0);
+        totalGeneral.textContent = formatMontant(total) + ' Ar';
+        btnCloturer.disabled = panier.length === 0;
+        btnVider.disabled = panier.length === 0;
+    }
+
+    document.getElementById('form-cloture').addEventListener('submit', function (event) {
+        if (panier.length === 0) {
+            event.preventDefault();
+            alert('Aucun produit à clôturer.');
+            return;
+        }
+
+        if (!confirm('Clôturer cet achat pour ' + nomAcheteur + ' ?')) {
+            event.preventDefault();
+        }
+    });
+
+    function formatMontant(montant) {
+        return montant.toLocaleString('fr-FR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+</script>
 
 </body>
 </html>

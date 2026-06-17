@@ -9,6 +9,10 @@ class CaisseController extends BaseController
 {
     public function index()
     {
+        if (! session()->get('username')) {
+            return redirect()->to('/')->with('error', 'Veuillez vous connecter avant de choisir une caisse.');
+        }
+
         $caisseModel = new Caisse();
         $caisses = $caisseModel->findAll();
 
@@ -20,6 +24,10 @@ class CaisseController extends BaseController
 
     public function choisir()
     {
+        if (! session()->get('username')) {
+            return redirect()->to('/')->with('error', 'Veuillez vous connecter avant de choisir une caisse.');
+        }
+
         $idCaisse = $this->request->getPost('id_caisse');
 
         if ($idCaisse) {

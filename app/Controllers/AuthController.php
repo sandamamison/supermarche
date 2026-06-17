@@ -14,8 +14,15 @@ class AuthController extends BaseController
 
     public function login()
     {
-        $username = $this->request->getPost('username');
+        $username = trim((string) $this->request->getPost('username'));
+
+        if ($username === '') {
+            return redirect()->to('/')->with('error', 'Veuillez entrer votre nom.');
+        }
+
         session()->set('username', $username);
+        session()->remove('id_caisse');
+
         return redirect()->to('/caisse');
     }
 
