@@ -1,3 +1,4 @@
+-- Active: 1781677483424@@127.0.0.1@3306
 -- =====================================================
 -- Base SQLite - Projet : Caisse d'un supermarche
 -- Fichier : tables.sql
