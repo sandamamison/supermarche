@@ -126,6 +126,27 @@
             color: #94a3b8;
             font-size: 15px;
         }
+        .alert {
+            max-width: 1000px;
+            margin: 0 auto 20px auto;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .alert-success {
+            background: #ecfdf5;
+            color: #047857;
+            border: 1px solid #a7f3d0;
+        }
+        .alert-error {
+            background: #fef2f2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
         @media (max-width: 768px) {
             .container {
                 grid-template-columns: 1fr;
@@ -147,6 +168,18 @@
             </a>
         </div>
     </div>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success">
+            <?= esc(session()->getFlashdata('success')) ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-error">
+            <?= esc(session()->getFlashdata('error')) ?>
+        </div>
+    <?php endif; ?>
 
     <div class="container">
         <!-- Colonne Gauche : Formulaire d'ajout -->
@@ -206,7 +239,7 @@
             
             <div style="margin-top: 20px; text-align: right;">
                 <form action="<?= base_url('achats/cloturer') ?>" method="POST" id="form-cloture">
-                    <!-- Les inputs cachés s'ajouteront ici -->
+                    <!-- Les inputs cachés du panier s'ajouteront ici -->
                     <button type="submit" class="btn" style="background: #10b981; width: auto;" id="btn-cloturer" disabled>Clôturer l'achat</button>
                 </form>
             </div>
@@ -258,7 +291,7 @@
             tbody.innerHTML = '';
             
             // Nettoyer les anciens inputs cachés (garder juste le bouton)
-            const inputsCaches = formCloture.querySelectorAll('input[type="hidden"]');
+            const inputsCaches = formCloture.querySelectorAll('input.produit-input');
             inputsCaches.forEach(input => input.remove());
 
             panier.forEach((item, index) => {
@@ -274,9 +307,9 @@
 
                 // Ajouter les inputs cachés pour l'envoi au backend
                 formCloture.insertAdjacentHTML('beforeend', `
-                    <input type="hidden" name="produits[${index}][id_produit]" value="${item.id_produit}">
-                    <input type="hidden" name="produits[${index}][quantite]" value="${item.quantite}">
-                    <input type="hidden" name="produits[${index}][prix_unitaire]" value="${item.prix}">
+                    <input class="produit-input" type="hidden" name="produits[${index}][id_produit]" value="${item.id_produit}">
+                    <input class="produit-input" type="hidden" name="produits[${index}][quantite]" value="${item.quantite}">
+                    <input class="produit-input" type="hidden" name="produits[${index}][prix_unitaire]" value="${item.prix}">
                 `);
             });
 
@@ -286,6 +319,19 @@
             // Activer ou désactiver le bouton clôturer
             document.getElementById('btn-cloturer').disabled = (panier.length === 0);
         }
+
+
+        document.getElementById('form-cloture').addEventListener('submit', function(event) {
+            if (panier.length === 0) {
+                event.preventDefault();
+                alert('Aucun produit à clôturer.');
+                return;
+            }
+
+            if (!confirm('Clôturer cet achat et enregistrer le ticket ?')) {
+                event.preventDefault();
+            }
+        });
     </script>
 
 </body>
