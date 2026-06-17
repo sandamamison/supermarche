@@ -1,0 +1,31 @@
+# Dossier Vendor (dépendances Composer)
+/vendor/
+
+# Fichiers d'environnement (ne jamais commiter les mots de passe/clés)
+.env
+.env.backup
+phpunit.xml
+
+# Dossier Writable (Logs, Caches, Sessions, Uploads)
+/writable/cache/*
+!/writable/cache/index.html
+/writable/logs/*
+!/writable/logs/index.html
+/writable/session/*
+!/writable/session/index.html
+/writable/uploads/*
+!/writable/uploads/index.html
+/writable/debugbar/*
+!/writable/debugbar/index.html
+
+# Fichiers de Base de données SQLite (si stockée dans writable)
+/writable/*.db
+/writable/*.sqlite
+/writable/*.sqlite3
+
+# Fichiers générés par l'OS ou l'éditeur de code
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+*.log
