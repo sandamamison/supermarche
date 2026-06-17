@@ -44,10 +44,13 @@ CREATE TABLE achat (
     prix_unitaire REAL NOT NULL CHECK (prix_unitaire >= 0),
     montant_ligne REAL NOT NULL CHECK (montant_ligne >= 0),
     date_achat TEXT DEFAULT CURRENT_TIMESTAMP,
+    nom_acheteur TEXT NOT NULL,
 
     FOREIGN KEY (id_caisse) REFERENCES caisse(id_caisse),
     FOREIGN KEY (id_produit) REFERENCES produit(id_produit)
 );
+
+ALTER TABLE achat ADD COLUMN nom_acheteur TEXT;
 
 drop table achat;
 

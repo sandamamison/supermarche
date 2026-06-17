@@ -12,7 +12,7 @@ class Achat extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['numero_ticket', 'id_caisse', 'id_produit', 'quantite', 'prix_unitaire', 'montant_ligne', 'date_achat'];
+    protected $allowedFields    = ['numero_ticket', 'id_caisse', 'id_produit', 'quantite', 'prix_unitaire', 'montant_ligne', 'date_achat', 'nom_acheteur'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

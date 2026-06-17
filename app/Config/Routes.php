@@ -3,9 +3,12 @@
 use CodeIgniter\Router\RouteCollection;
 use App\Controllers\CaisseController;
 use App\Controllers\AchatController;
+use App\Controllers\AuthController;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', [CaisseController::class, 'index']);
+$routes->get('/', [AuthController::class, 'index']);
+$routes->post('/login', [AuthController::class, 'login']);
+$routes->get('/caisse', [CaisseController::class, 'index']);
 $routes->post('caisse/choisir', [CaisseController::class, 'choisir']);
 $routes->get('achats', [AchatController::class, 'index']);
