@@ -11,12 +11,12 @@ Objectif : créer une application simple permettant à un utilisateur de se conn
 
 ## 1. Préparation de la base de données
 
-- [ ] Créer la base de données SQLite.
-- [ ] Créer le fichier `tables.sql`.
-- [ ] Créer le fichier `insertion_donnees.sql`.
-- [ ] Créer la table `produit`.
-- [ ] Créer la table `caisse`.
-- [ ] Créer la table `achat`.
+- [x] Créer la base de données SQLite.
+- [x] Créer le fichier `tables.sql`.
+- [x] Créer le fichier `insertion_donnees.sql`.
+- [x] Créer la table `produit`.
+- [x] Créer la table `caisse`.
+- [x] Créer la table `achat`.
 - [ ] Insérer 5 produits dans la table `produit`.
 - [ ] Insérer 2 caisses dans la table `caisse`.
 - [ ] Tester si les données sont bien insérées.
@@ -25,14 +25,14 @@ Objectif : créer une application simple permettant à un utilisateur de se conn
 
 ## 2. Initialisation du projet CodeIgniter
 
-- [ ] Créer le projet CodeIgniter.
-- [ ] Vérifier que le projet fonctionne dans le navigateur.
-- [ ] Configurer la base SQLite dans CodeIgniter.
-- [ ] Créer les dossiers nécessaires :
-  - [ ] Controllers
-  - [ ] Models
-  - [ ] Views
-- [ ] Préparer la structure MVC du projet.
+- [x] Créer le projet CodeIgniter.
+- [x] Vérifier que le projet fonctionne dans le navigateur.
+- [x] Configurer la base SQLite dans CodeIgniter.
+- [-] Créer les dossiers nécessaires :
+  - [x] Controllers
+  - [x] Models
+  - [-] Views
+- [-] Préparer la structure MVC du projet.
 
 ---
 
@@ -62,8 +62,7 @@ Objectif : créer une application simple permettant à un utilisateur de se conn
 
 ## 5. Création de l’écran de choix de caisse
 
-- [ ] Afficher la liste des caisses disponibles.
-- [ ] Créer un formulaire de choix de caisse.
+- [x] Afficher la liste des caisses disponibles.
 - [ ] Enregistrer la caisse choisie dans la session.
 - [ ] Rediriger vers la page de saisie des achats.
 - [ ] Afficher le numéro ou le nom de la caisse choisie en haut de la page.
