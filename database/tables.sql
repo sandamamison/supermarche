@@ -1,3 +1,4 @@
+-- Active: 1781677731429@@127.0.0.1@3306
 -- =====================================================
 -- Base SQLite - Projet : Caisse d'un supermarche
 -- Fichier : tables.sql
@@ -42,12 +43,13 @@ CREATE TABLE achat (
     quantite INTEGER NOT NULL CHECK (quantite > 0),
     prix_unitaire REAL NOT NULL CHECK (prix_unitaire >= 0),
     montant_ligne REAL NOT NULL CHECK (montant_ligne >= 0),
-    statut TEXT NOT NULL DEFAULT 'en_cours' CHECK (statut IN ('en_cours', 'cloture')),
     date_achat TEXT DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (id_caisse) REFERENCES caisse(id_caisse),
     FOREIGN KEY (id_produit) REFERENCES produit(id_produit)
 );
+
+drop table achat;
 
 -- Index utiles pour accelerer les recherches
 CREATE INDEX idx_achat_numero_ticket ON achat(numero_ticket);

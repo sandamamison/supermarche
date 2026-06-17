@@ -63,8 +63,8 @@ Objectif : créer une application simple permettant à un utilisateur de se conn
 ## 5. Création de l’écran de choix de caisse
 
 - [x] Afficher la liste des caisses disponibles.
-- [ ] Enregistrer la caisse choisie dans la session.
-- [ ] Rediriger vers la page de saisie des achats.
+- [x] Enregistrer la caisse choisie dans la session.
+- [x] Rediriger vers la page de saisie des achats.
 - [ ] Afficher le numéro ou le nom de la caisse choisie en haut de la page.
 
 ---
