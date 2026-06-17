@@ -21,7 +21,7 @@ class Achat extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = true;
+    protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'date_achat';
     protected $updatedField  = 'updated_at';
